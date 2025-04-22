@@ -1,5 +1,5 @@
 // Fibre Optic Sensation
-// Fun number
+// Fun numbers
 const numberOfParticles = 50000;
 const sizeMx = 5; // Particle max size
 const speedMx = 10;
@@ -34,10 +34,9 @@ class Particle {
     this.x = this.initialX;
     this.y = this.initialY;
 
-    // Give it a random size (radius) between 1 and 3 pixels
     this.size = Math.random() * sizeMx + 1;
 
-    // Initialize velocities to 0 (stationary)
+    // Initialize velocities to 0
     this.vx = 0;
     this.vy = 0;
 
@@ -49,15 +48,15 @@ class Particle {
     this.activated = false;
     this.returning = false;
 
-    // Friction for slowing down
+    // Friction for slowing
     this.friction = friction;
 
     this.returnSpeed = returnSpeed;
   }
 
-  // Method to update particle's position
+  // Update position
   update() {
-    // Check if mouse is close to this particle (activation check)
+    // Check if mouse proximity (activation check)
     if (!this.activated && !this.returning && mouse.x && mouse.y) {
       const dx = this.x - mouse.x;
       const dy = this.y - mouse.y;
@@ -83,15 +82,14 @@ class Particle {
     }
 
     if (this.activated) {
-      // Move the particle
       this.x += this.vx;
       this.y += this.vy;
 
-      // Apply friction to slow down
+      // Apply friction
       this.vx *= this.friction;
       this.vy *= this.friction;
 
-      // Check if particle has slowed down enough to start returning
+      // Check if slowed down enough to start returning
       if (Math.abs(this.vx) < 0.1 && Math.abs(this.vy) < 0.1) {
         this.activated = false;
         this.returning = true;
@@ -117,9 +115,8 @@ class Particle {
     }
   }
 
-  // Method to draw the particle
   draw() {
-    // Use different colors based on particle state
+    // Use colours based on particle state
     if (this.activated) {
       ctx.fillStyle = active;
     } else if (this.returning) {
@@ -138,22 +135,21 @@ class Particle {
 let particlesArray = [];
 
 function init() {
-  particlesArray = []; // Clear the array
+  particlesArray = [];
   for (let i = 0; i < numberOfParticles; i++) {
     particlesArray.push(new Particle());
   }
 }
 
-init(); // Create initial particles
+init();
 
 // ---- EVENT LISTENERS ----
 window.addEventListener("resize", function () {
   canvas.height = window.innerHeight;
   canvas.width = window.innerWidth;
-  init(); // Recreate particles when window resizes
+  init();
 });
 
-// Add mousemove listener to track cursor position
 window.addEventListener("mousemove", function (event) {
   mouse.x = event.clientX;
   mouse.y = event.clientY;
@@ -161,7 +157,7 @@ window.addEventListener("mousemove", function (event) {
 
 // ---- ANIMATION LOOP ----
 function animate() {
-  // Clear/fade the background
+  // Clear the background with fade
   ctx.fillStyle = "rgba(232, 237, 245, 0.25)"; // Adjust alpha for trail length
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
